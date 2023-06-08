@@ -192,5 +192,39 @@ def com(board):
         moves = abminimax(board, len(empty(board)), -inf, inf, -1)
         Moved(board, moves[0], moves[1], -1)
         update_screen()
+def gameloop():
+  running =True
+  global count
+  while running:
+      global count
+      for event in pygame.event.get():
+          if event.type == pygame.QUIT:
+              pygame.quit()
+          elif event.type == pygame.MOUSEMOTION:
+              for row in boxes:
+                  for box in row:
+                      if box['rect'].collidepoint(event.pos):
+                          box['color'] = BLACK
+                      else:
+                          box['color'] = GRAY
+              update_screen()
+          elif event.type == pygame.MOUSEBUTTONUP:
+              for row in boxes:
+                  for box in row:
+                      if box['rect'].collidepoint(event.pos):
+                          if box['value'] == '':
+                              box['value'] ='X'
+                              match()
+                              check()
+                              update_screen()
+                              count+=1
+                              if count==9:
+                                break
 
+                              com(board)
+                              check()
+                              update_screen()
+                              count+=1
+gameloop()
+pygame.quit()
     
