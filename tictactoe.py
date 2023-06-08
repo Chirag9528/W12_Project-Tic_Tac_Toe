@@ -272,3 +272,276 @@ def com():
     space =0
     
   common(send)
+
+#resetting the values of all the boxes
+def reset():
+  for row in boxes:
+    for box in row:
+      box['value']=''
+running =True
+
+
+def mode():
+  
+  global running
+  #initializing node window
+  mode=pygame.image.load('nmode_bg.jpg')
+  mode=pygame.transform.scale(mode,(560,560))
+  screen.blit(mode,(0,0))
+
+
+  #setting the position of coordinates of modes button
+  rectangle1_x = 25
+  rectangle1_y = 300
+  rectangle2_x = 370
+  rectangle2_y = 300
+
+  #defining dimensions of the level buttons
+  rectangle_width1 = 190
+  rectangle_width2=170
+  rectangle_height = 200
+
+  pygame.display.flip()
+  while running:
+    for event in pygame.event.get():
+      if event.type==pygame.QUIT:
+        #if player clicked the closed button
+        running =False
+      elif event.type == pygame.MOUSEBUTTONUP:
+        global computer
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+
+        if (rectangle1_x <= mouse_x and mouse_x <= rectangle1_x + rectangle_width1) and (rectangle1_y <= mouse_y and mouse_y <= rectangle1_y + rectangle_height):
+          #if player clicked 'Multiplayer'
+          computer =False
+          gameloop()
+          
+
+
+        if (rectangle2_x <= mouse_x and mouse_x<= rectangle2_x + rectangle_width2) and (rectangle2_y<=mouse_y and mouse_y<=(rectangle2_y+rectangle_height)):
+          #if player clicked 'V/S Computer'
+          computer =True
+          level_set()
+
+    pygame.display.update()
+      
+def level_set():
+  global running
+  #initializing level window
+  lable=pygame.image.load('nlevel_bg.jpg')
+  lable=pygame.transform.scale(lable,(560,560))
+  screen.blit(lable,(0,0))
+
+
+  #setting the position of coordinates of levels button
+  rectangle1_x = 60               
+  rectangle1_y = 300               
+  rectangle2_x = 350             
+  rectangle2_y = 290 
+
+  #defining dimensions of the level buttons
+  rectangle_width1 = 165
+  rectangle_width2=175
+  rectangle_height = 175
+
+
+
+  while running:
+    for event in pygame.event.get():
+
+      if event.type==pygame.QUIT:
+        running =False
+      elif event.type == pygame.MOUSEBUTTONUP:
+        global level
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+
+        if (rectangle1_x <= mouse_x and mouse_x <= rectangle1_x + rectangle_width1) and (rectangle1_y <= mouse_y and mouse_y<= rectangle1_y + rectangle_height):
+          #if player clicked level1
+          level =1
+          gameloop()
+
+
+        if (rectangle2_x <= mouse_x and mouse_x<= rectangle2_x + rectangle_width2) and (rectangle2_y <= mouse_y and mouse_y<= rectangle2_y + rectangle_height):
+          #if player clicked level2
+          level =2
+          gameloop()
+    pygame.display.update()
+      
+def welcome():
+    #loading music and playing it
+    pygame.mixer.music.load('welcome_music.wav')
+    pygame.mixer.music.play()
+    
+
+    global running
+    while running:
+        
+
+        #loading the background image
+        background = pygame.image.load("nwelcome_new.jpg")
+        background = pygame.transform.scale(background, (560,560))
+        screen.blit(background, (0,0))
+
+        #defining coordinates of start button
+        rectangle_x = 190
+        rectangle_y = 315
+        rectangle_width = 183
+        rectangle_height = 185
+
+        
+
+        for event in pygame.event.get():
+                
+                if event.type==pygame.QUIT:
+                    running =False
+
+                elif event.type == pygame.MOUSEBUTTONUP:
+                  mouse_x, mouse_y = pygame.mouse.get_pos()
+                  if (rectangle_x <= mouse_x and mouse_x <= rectangle_x + rectangle_width) and (rectangle_y <= mouse_y and mouse_y <= rectangle_y + rectangle_height):
+                    #if player clicked start button
+                    mode()
+        pygame.display.update()
+        
+def end(s):
+  pygame.mixer.music.load('win_music.wav')
+  pygame.mixer.music.play()
+
+
+  global running
+  global count
+  count =0
+  while running:
+
+    if s=='O':
+      screen.fill((100,200,0))
+
+      if computer:
+        #if player won the game V/S computer
+        background1 = pygame.image.load("O_win.jpg")
+        background1 = pygame.transform.scale(background1, (560,560))
+        screen.blit(background1, (0,0))
+
+        #adding text to screen
+        text = textfont.render("Press enter to continue...", True, BLUE)
+        screen.blit(text, (180,520))
+
+
+      else:
+        #if player1 won the game
+        background2 = pygame.image.load("O_win.jpg")
+        background2 = pygame.transform.scale(background2, (560,560))
+        screen.blit(background2, (0,0))
+
+        #adding text to screen
+        text = textfont.render("Press enter to continue...", True, BLUE)
+        screen.blit(text, (180,520))
+
+
+    elif s=='X':
+      screen.fill((0,255,0))
+
+      if computer:
+        #if player lose the game V/S computer
+
+        background3 = pygame.image.load("X_win.jpg")
+        background3 = pygame.transform.scale(background3, (560,560))
+        screen.blit(background3, (0,0))
+
+        #adding text to screen
+        text = textfont.render("Press enter to continue...", True, BLUE)
+        screen.blit(text, (180,520))
+
+      else:
+        #if player2 won the game
+
+        background4 = pygame.image.load("X_win.jpg")
+        background4 = pygame.transform.scale(background4, (560,560))
+        screen.blit(background4, (0,0))
+
+        #adding text to screen
+        text = textfont.render("Press enter to continue...", True, BLUE)
+        screen.blit(text, (180,520))
+
+
+    else:
+      #if the game is draw
+
+      screen.fill((200,200,200))
+      background5 = pygame.image.load("Draw.jpg")
+      background5 = pygame.transform.scale(background5, (560,560))
+      screen.blit(background5, (0,0))
+
+      #adding text to screen
+      text = textfont.render("Press enter to continue...", True, BLUE)
+      screen.blit(text, (180,520))
+      
+    for event in pygame.event.get():
+      if event.type==pygame.QUIT:
+        running =False
+      if event.type==pygame.KEYDOWN:
+        if event.key==pygame.K_RETURN:
+          welcome()
+    pygame.display.update()
+    
+def gameloop():
+  #stoping the music after entering into gameloop
+  pygame.mixer.music.stop()
+
+  reset()          #resetting the matrix
+  global running
+  while running:
+      
+      global count
+      for event in pygame.event.get():
+        
+          if event.type == pygame.QUIT:        
+              running =False
+
+          elif event.type == pygame.MOUSEMOTION:        #adding the hovering effect
+              for row in boxes:
+                  for box in row:
+                      
+                      if box['rect'].collidepoint(event.pos):  #if hovered ,box margin color is changed
+                          box['color'] = BLACK
+                      else:
+                          box['color'] = GRAY
+              
+              update_screen()
+
+          elif event.type == pygame.MOUSEBUTTONUP:
+              for row in boxes:
+                  for box in row:
+                      
+                      if box['rect'].collidepoint(event.pos):     #if clicked in a box
+                          
+                          if count==0:
+                            reset()
+
+                          if box['value'] == '':   #if only box is empty ,fill the box
+                              
+                              if count%2==0:
+                                box['value'] = 'O'
+                              else:
+                                box['value'] ='X'
+                              update_screen()
+                              check()
+                              
+                              count +=1                              
+                              if count==25:
+                                end('D')
+                                break
+
+                              if computer:
+                                com()
+                                update_screen()
+                                check()
+                              else:
+                                break
+                              count+=1
+
+
+
+welcome()
+pygame.quit()
