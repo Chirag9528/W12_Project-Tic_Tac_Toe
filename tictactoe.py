@@ -352,9 +352,6 @@ def level_set():
 
       if event.type==pygame.QUIT:
         running =False
-      elif event.type ==pygame.KEYDOWN:
-        if event.key ==pygame.K_SPACE:
-            reset()
       elif event.type == pygame.MOUSEBUTTONUP:
         global level
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -501,7 +498,9 @@ def gameloop():
         
           if event.type == pygame.QUIT:        
               running =False
-
+          elif event.type ==pygame.KEYDOWN:
+            if event.key ==pygame.K_SPACE:
+                reset()
           elif event.type == pygame.MOUSEMOTION:        #adding the hovering effect
               for row in boxes:
                   for box in row:
